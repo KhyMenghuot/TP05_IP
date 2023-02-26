@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/EX3.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="top">
+            <div class="img">
+                <img src="https://t4.ftcdn.net/jpg/02/03/94/83/360_F_203948325_Pf2Ou1KEO7IrSiWwWcmmTlnxfvDWvNSB.jpg" alt="">
+            </div>
+            <h1>I know you <b style="color: blue;">Home</b></h1>
+            <div class="input">
+                <input id="input" type="text" placeholder="Tell me you name ">
+                <button id="button">Guess</button>
+            </div>
+
+            <div id="loading">Loading...</div>
+            <div id="container">
+                <div class="data">
+                    <div id="country_1"></div>
+                    <div id="probability1"></div>
+                </div>
+                <div class="data">
+                    <div id="country_2"></div>
+                    <div id="probability2"></div>
+                </div>
+                <div class="data">
+                    <div id="country_3"></div>
+                    <div id="probability3"></div>
+                </div>
+                <div class="data">
+                    <div id="country_4"></div>
+                    <div id="probability4"></div>
+                </div>
+                <div class="data">
+                    <div id="country_5"></div>
+                    <div id="probability5"></div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script>
+        button = document.getElementById("button");
+        loading = document.getElementById("loading");
+        container = document.getElementById("container");
+
+        button.addEventListener("click", function() {
+            value = document.getElementById("input").value;
+            loading.hidden = true;
+            container.hidden = false;
+
+
+            fetch(`https://api.nationalize.io?name=${value}`).then(async(res) => {
+                let data = await res.json();
+                loading.hidden = true;
+                container.hidden = false;
+
+                document.getElementById("country_1").innerHTML = data["country"][0].country_id;
+                document.getElementById("probability1").innerHTML = data["country"][0].probability + " %";
+
+                document.getElementById("country_2").innerHTML = data["country"][1].country_id;
+                document.getElementById("probability2").innerHTML = data["country"][1].probability + " %";
+
+                document.getElementById("country_3").innerHTML = data["country"][2].country_id;
+                document.getElementById("probability3").innerHTML = data["country"][2].probability + " %";
+
+                document.getElementById("country_4").innerHTML = data["country"][3].country_id;
+                document.getElementById("probability4").innerHTML = data["country"][3].probability + " %";
+
+                document.getElementById("country_5").innerHTML = data["country"][4].country_id;
+                document.getElementById("probability5").innerHTML = data["country"][4].probability + " %";
+
+            });
+        })
+    </script>
+</body>
+
+</html>

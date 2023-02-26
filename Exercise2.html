@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX2</title>
+    <link rel="stylesheet" href="./css/EX2.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="top">
+            <div class="img">😁 </div>
+            <h1>I know you <b style="color: blue;">gender</b></h1>
+            <div class="input">
+                <input id="input" type="text" placeholder="Tell me you name ">
+                <button onclick="getMeAnActivity()">Guess</button>
+            </div>
+
+            <div id="loading-text">Loading...</div>
+            <div class="container">
+                <div id="name"></div>
+                <div id="gender"></div>
+                <div id="probability"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const loadingTextEle = document.getElementById("loading-text");
+        const Name = document.getElementById("name");
+        const Gender = document.getElementById("gender");
+        const Probability = document.getElementById("probability");
+
+        function getMeAnActivity() {
+            loadingTextEle.hidden = false;
+            let value = document.getElementById("input").value;
+            fetch(`https://api.genderize.io?name=${value}`).then(async(res) => {
+                let data = await res.json();
+
+                loadingTextEle.hidden = true;
+                // activityNameEle.innerHTML = data.activity;
+                // type.innerHTML = ` <i class="fa-solid fa-tag"></i> Type: ` + data.type;
+                Name.innerHTML = data.name;
+                Gender.innerHTML = data.gender;
+                Probability.innerHTML = data.probability + " %";
+
+            });
+
+        }
+    </script>
+</body>
+
+</html>
